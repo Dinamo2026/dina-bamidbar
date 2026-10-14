@@ -282,12 +282,12 @@
   const gv = document.getElementById('gv'), snd = document.getElementById('snd');
   snd.addEventListener('click', () => { gv.muted = !gv.muted; snd.textContent = gv.muted ? '🔇 עם סאונד' : '🔊 בלי סאונד'; if (!gv.muted) stopMusic(); });
 
-  // background music (Suno — Golden Journey). Browsers block sound until the first tap,
+  // background music (Suno — Open Road (סבב 2, גרסה 3)). Browsers block sound until the first tap,
   // so the first touch anywhere on the page starts it; the floating button toggles it.
   const bgm = document.getElementById('bgm'), mus = document.getElementById('mus'), mlab = document.getElementById('mlab');
   let userStopped = false, fade;
   const fadeTo = (v, done) => { clearInterval(fade); fade = setInterval(() => { const d = v - bgm.volume; if (Math.abs(d) < .04) { bgm.volume = v; clearInterval(fade); done && done(); } else bgm.volume += Math.sign(d) * .04; }, 40); };
-  function playMusic(){ bgm.volume = 0; bgm.play().then(() => { fadeTo(.7); mus.classList.add('on'); mlab.textContent = 'מוזיקה'; }).catch(() => {}); }
+  function playMusic(){ bgm.volume = 0; bgm.play().then(() => { fadeTo(.4); mus.classList.add('on'); mlab.textContent = 'מוזיקה'; }).catch(() => {}); }
   function stopMusic(){ fadeTo(0, () => bgm.pause()); mus.classList.remove('on'); mlab.textContent = 'הפעילו מוזיקה'; }
   mus.addEventListener('click', e => { e.stopPropagation(); if (bgm.paused || !mus.classList.contains('on')) { userStopped = false; playMusic(); } else { userStopped = true; stopMusic(); } });
   const firstTouch = e => { if (e.target.closest('.wa, .sound')) return; if (!userStopped && bgm.paused) playMusic(); document.removeEventListener('pointerdown', firstTouch); };
